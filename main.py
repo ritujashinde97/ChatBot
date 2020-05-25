@@ -2,6 +2,8 @@ from chatterbot.trainers import ListTrainer
 from chatterbot import ChatBot
 from tkinter import *
 import pyttsx3 as pp
+import speech_recognition as s
+import threading
 
 engine=pp.init()
 voices=engine.getProperty('voices')
@@ -23,7 +25,7 @@ convo = {
     'I am doing great in these days',
     'thank you',
     'In which city you live?',
-    'I live in Pune'
+    'I live in Pune',
     'Which language you prefer to talk?',
     'I mostly prefer English.',
     'I need your help.',
@@ -32,6 +34,23 @@ convo = {
     'I love painting.',
     'what do you like to eat?',
     'I like punjabi food.',
+    'what is your mood now?',
+    'I am happy',
+    'what is yor name?',
+    'my name is bot, Rituja created me.',
+    'do you like coffee or tea?',
+    'i like coffee',
+    'nice,'
+    'good morning ',
+    'good morning',
+    'good afternoon',
+    'good afternoon',
+    'good night',
+    'good night',
+    'how is quarantine going',
+    'oh..I am bored',
+    'me too',
+    'its sad.'
 
 }
 
@@ -53,6 +72,23 @@ main.title("My Chat Bot")
 img=PhotoImage(file="bot.png")
 photoLable = Label(main,image=img)
 photoLable.pack(pady=5)
+
+def takeQuery():
+    sr = s.Recognizer()
+    sr.pause_threshold = 1
+    print("Your bot is listening, try to speak")
+    with s.Microphone() as m:
+        try:
+            audio = sr.listen(m)
+            query = sr.recognize_google(audio,language='eng-in')
+            print(query)
+            textField.delete(0,END)
+            textField.insert(0,query)
+            ask_from_bot()
+        except Exception as e:
+            print(e)
+            print("not recognized")
+
 
 def ask_from_bot():
     query=textField.get()
@@ -79,5 +115,11 @@ def enter_function(event):
 
 main.bind('<Return>',enter_function)
 
+def repeatL():
+    while True:
+        takeQuery()
+
+t=threading.Thread(target=repeatL)
+t.start()
 
 main.mainloop()
