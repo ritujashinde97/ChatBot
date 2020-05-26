@@ -4,6 +4,7 @@ from tkinter import *
 import pyttsx3 as pp
 import speech_recognition as s
 import threading
+import os
 
 engine=pp.init()
 voices=engine.getProperty('voices')
@@ -16,47 +17,52 @@ def speak(word):
 
 bot = ChatBot("My Bot")
 
-convo = {
-    'hello',
-    'hi',
-    'what is your name?',
-    'My name is Bot, I am created by Rituja ',
-    'how are you?',
-    'I am doing great in these days',
-    'thank you',
-    'In which city you live?',
-    'I live in Pune',
-    'Which language you prefer to talk?',
-    'I mostly prefer English.',
-    'I need your help.',
-    'how may I help you?',
-    'what are your hobbies?',
-    'I love painting.',
-    'what do you like to eat?',
-    'I like punjabi food.',
-    'what is your mood now?',
-    'I am happy',
-    'what is yor name?',
-    'my name is bot, Rituja created me.',
-    'do you like coffee or tea?',
-    'i like coffee',
-    'nice,'
-    'good morning ',
-    'good morning',
-    'good afternoon',
-    'good afternoon',
-    'good night',
-    'good night',
-    'how is quarantine going',
-    'oh..I am bored',
-    'me too',
-    'its sad.'
-
-}
-
+# convo = {
+#     'hello',
+#     'hi',
+#     'what is your name?',
+#     'My name is Bot, I am created by Rituja ',
+#     'how are you?',
+#     'I am doing great in these days',
+#     'thank you',
+#     'In which city you live?',
+#     'I live in Pune',
+#     'Which language you prefer to talk?',
+#     'I mostly prefer English.',
+#     'I need your help.',
+#     'how may I help you?',
+#     'what are your hobbies?',
+#     'I love painting.',
+#     'what do you like to eat?',
+#     'I like punjabi food.',
+#     'what is your mood now?',
+#     'I am happy',
+#     'what is yor name?',
+#     'my name is bot, Rituja created me.',
+#     'do you like coffee or tea?',
+#     'i like coffee',
+#     'nice,'
+#     'good morning ',
+#     'good morning',
+#     'good afternoon',
+#     'good afternoon',
+#     'good night',
+#     'good night',
+#     'how is quarantine going',
+#     'oh..I am bored',
+#     'me too',
+#     'its sad.'
+#
+# }
+path = 'english\\'
 trainer = ListTrainer(bot)
+for file in os.listdir(path):
+    data = open(path + file, 'r').readlines()
+    trainer.train(data)
 
-trainer.train(convo)
+# trainer = ListTrainer(bot)
+
+# trainer.train(convo)
 
 """print("Talk to bot!")
 while True:
